@@ -1,46 +1,55 @@
-# Astro Starter Kit: Basics
+# Hero Frame Sequence — BARK™
+
+A frontend demo for the **LABS** section of [thelucho.dev](https://www.thelucho.dev).
+
+This project is part of a series of small, self-contained experiments I build to explore interaction, motion, and visual techniques before taking them into client or product work. Each demo isolates one idea. Here, that idea is the **Hero**.
+
+---
+
+## What this demo explores
+
+The Hero plays a **pointer-driven frame sequence**.
+
+A 101-frame JPEG sequence of a dog looking from left to right is preloaded and painted onto a `<canvas>`. Horizontal pointer position maps to a frame in that sequence: left of the viewport looks left, the center looks straight ahead, the right looks right.
+
+GSAP’s ticker interpolates toward the target frame with easing and a speed cap, so the sequence always plays through neighboring frames instead of jumping. The effect respects `prefers-reduced-motion`.
+
+The rest of the page is a fictional pet brand (BARK™) that gives the Hero a real layout to live in.
+
+---
+
+## Stack
+
+| Piece | Role |
+| --- | --- |
+| [Astro](https://astro.build) | Pages, components, and the build |
+| TypeScript | Hero, scroll, and motion scripts |
+| Canvas 2D | Painting the frame sequence |
+| [GSAP](https://gsap.com) | Ticker, easing, ScrollTrigger, intro and reveals |
+| [Lenis](https://lenis.darkroom.engineering) | Smooth scrolling |
+| Plus Jakarta Sans + Instrument Serif | Type, loaded via Astro Fonts / Google |
+
+---
+
+## Run it locally
+
+Node `>= 22.12.0` is required.
 
 ```sh
-npm create astro@latest -- --template basics
+npm install
+npm run dev
 ```
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+The site starts at `http://localhost:4321`.
 
-## 🚀 Project Structure
+| Command | What it does |
+| --- | --- |
+| `npm run dev` | Local development server |
+| `npm run build` | Production build to `./dist/` |
+| `npm run preview` | Serve the production build locally |
 
-Inside of your Astro project, you'll see the following folders and files:
+---
 
-```text
-/
-├── public/
-│   └── favicon.svg
-├── src
-│   ├── assets
-│   │   └── astro.svg
-│   ├── components
-│   │   └── Welcome.astro
-│   ├── layouts
-│   │   └── Layout.astro
-│   └── pages
-│       └── index.astro
-└── package.json
-```
+## More from LABS
 
-To learn more about the folder structure of an Astro project, refer to [our guide on project structure](https://docs.astro.build/en/basics/project-structure/).
-
-## 🧞 Commands
-
-All commands are run from the root of the project, from a terminal:
-
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
-
-## 👀 Want to learn more?
-
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+This is one demo in an ongoing series. The rest live on [thelucho.dev](https://www.thelucho.dev).
