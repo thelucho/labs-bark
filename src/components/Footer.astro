@@ -1,0 +1,128 @@
+---
+const links = [
+	{ label: 'Collection', href: '#collection' },
+	{ label: 'Wellness', href: '#wellness' },
+	{ label: 'Lifestyle', href: '#lifestyle' },
+	{ label: 'About', href: '#about' },
+	{ label: 'Contact', href: '#top' },
+];
+
+const year = new Date().getFullYear();
+---
+
+<footer class="footer">
+	<div class="shell footer__inner">
+		<div class="footer__brand">
+			<p class="footer__mark">BARK<span class="footer__tm">™</span></p>
+			<p class="footer__tagline">Thoughtfully designed for modern pets.</p>
+		</div>
+
+		<nav class="footer__nav" aria-label="Footer">
+			{links.map((link) => <a href={link.href}>{link.label}</a>)}
+		</nav>
+
+		<hr class="rule footer__rule" />
+
+		<div class="footer__base">
+			<p class="footer__joke">Made for pets. Approved by their humans.</p>
+			<p class="footer__legal">
+				© {year} BARK™ — a fictional brand, built as a frontend demo by <a
+					class="footer__credit"
+					href="https://www.thelucho.dev"
+					target="_blank"
+					rel="noreferrer">Thelucho</a
+				>
+			</p>
+		</div>
+	</div>
+</footer>
+
+<style>
+	.footer {
+		padding-block: clamp(3rem, 6vw, 5rem) clamp(1.75rem, 3vw, 2.5rem);
+	}
+
+	.footer__inner {
+		display: grid;
+		gap: clamp(2rem, 4vw, 3.5rem);
+	}
+
+	.footer__brand {
+		display: grid;
+		gap: 0.5rem;
+	}
+
+	.footer__mark {
+		font-size: clamp(2.75rem, 8vw, 5rem);
+		font-weight: 700;
+		letter-spacing: -0.055em;
+		line-height: 0.9;
+	}
+
+	.footer__tm {
+		font-size: 0.3em;
+		font-weight: 600;
+		vertical-align: super;
+		letter-spacing: 0;
+	}
+
+	.footer__tagline {
+		font-size: var(--t-lede);
+		color: var(--ink-soft);
+	}
+
+	.footer__nav {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.5rem 2rem;
+	}
+
+	.footer__nav a {
+		position: relative;
+		padding-block: 0.5rem;
+		font-size: 0.9375rem;
+		font-weight: 500;
+		text-decoration: none;
+		color: var(--ink-soft);
+		transition: color 0.3s var(--ease-soft);
+	}
+
+	.footer__nav a:hover {
+		color: var(--ink);
+	}
+
+	.footer__rule {
+		margin: 0;
+	}
+
+	.footer__base {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: baseline;
+		justify-content: space-between;
+		gap: 0.5rem 2rem;
+		font-size: 0.8125rem;
+	}
+
+	.footer__joke {
+		font-weight: 500;
+	}
+
+	.footer__legal {
+		color: var(--ink-faint);
+	}
+
+	.footer__credit {
+		font-weight: 600;
+		color: var(--ink);
+		text-decoration: underline;
+		text-decoration-thickness: 1px;
+		text-underline-offset: 0.2em;
+		text-decoration-color: var(--line-strong);
+		transition: text-decoration-color 0.3s var(--ease-soft);
+	}
+
+	.footer__credit:hover {
+		text-decoration-color: currentColor;
+	}
+</style>

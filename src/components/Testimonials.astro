@@ -1,0 +1,283 @@
+---
+const reviews = [
+	{
+		quote: 'Finally, a brand that understands that my afternoon nap is sacred.',
+		name: 'Milo',
+		role: 'Professional Napper',
+		avatar: '/images/avatar-milo.jpg',
+		size: 'lead',
+	},
+	{
+		quote:
+			'I have no idea what this product does. I just know the packaging looks expensive.',
+		name: 'Luna',
+		role: 'Very Important Dog',
+		avatar: '/images/avatar-luna.jpg',
+		size: 'regular',
+	},
+	{
+		quote: 'The bed is excellent. I sleep on the floor beside it, entirely out of principle.',
+		name: 'Otto',
+		role: 'Semi-retired Chaos Consultant',
+		avatar: '/images/avatar-otto.jpg',
+		size: 'regular',
+	},
+	{
+		quote: 'My human is noticeably calmer now. I am choosing to take full credit for this.',
+		name: 'Nova',
+		role: 'Emotional Support Supervisor',
+		avatar: '/images/avatar-nova.jpg',
+		size: 'regular',
+	},
+];
+
+const [lead, ...rest] = reviews;
+---
+
+<section class="reviews section">
+	<div class="shell">
+		<header class="reviews__head">
+			<p class="eyebrow" data-reveal="up">05 — Social proof</p>
+			<h2 class="headline reviews__title" data-reveal="up">
+				Trusted by dogs with <span class="serif">extremely</span> high standards.
+			</h2>
+		</header>
+
+		<div class="reviews__grid">
+			<figure class="review review--lead" data-reveal="up">
+				<blockquote class="review__quote">{lead.quote}</blockquote>
+
+				<figcaption class="review__by">
+					<img
+						class="review__avatar"
+						src={lead.avatar}
+						alt=""
+						loading="lazy"
+						decoding="async"
+						width="96"
+						height="96"
+					/>
+					<span>
+						<span class="review__name">{lead.name}</span>
+						<span class="review__role">{lead.role}</span>
+					</span>
+				</figcaption>
+			</figure>
+
+			<aside class="reviews__score" data-reveal="up">
+				<p class="reviews__scoreValue">4.9</p>
+				<p class="reviews__scoreLabel">Average rating across the collection</p>
+
+				<div class="reviews__scoreFoot">
+					<ul class="reviews__stack">
+						{
+							reviews.map((review) => (
+								<li>
+									<img
+										src={review.avatar}
+										alt=""
+										loading="lazy"
+										decoding="async"
+										width="72"
+										height="72"
+									/>
+								</li>
+							))
+						}
+					</ul>
+					<span class="reviews__scoreCount">1,204 verified humans</span>
+				</div>
+			</aside>
+
+			{
+				rest.map((review) => (
+					<figure class="review" data-reveal="up">
+						<blockquote class="review__quote">{review.quote}</blockquote>
+
+						<figcaption class="review__by">
+							<img
+								class="review__avatar"
+								src={review.avatar}
+								alt=""
+								loading="lazy"
+								decoding="async"
+								width="96"
+								height="96"
+							/>
+							<span>
+								<span class="review__name">{review.name}</span>
+								<span class="review__role">{review.role}</span>
+							</span>
+						</figcaption>
+					</figure>
+				))
+			}
+		</div>
+	</div>
+</section>
+
+<style>
+	.reviews__head {
+		display: grid;
+		gap: 1.25rem;
+		max-width: 44rem;
+		margin-bottom: clamp(2.5rem, 5vw, 4rem);
+	}
+
+	.reviews__title .serif {
+		color: var(--brand-deep);
+	}
+
+	.reviews__grid {
+		display: grid;
+		grid-template-columns: repeat(12, minmax(0, 1fr));
+		gap: clamp(0.75rem, 1.2vw, 1.125rem);
+	}
+
+	.review {
+		display: flex;
+		flex-direction: column;
+		justify-content: space-between;
+		gap: 2rem;
+		grid-column: span 4;
+		padding: clamp(1.5rem, 2.2vw, 2rem);
+		border: 1px solid var(--line);
+		border-radius: var(--r-xl);
+		background: var(--paper);
+		transition:
+			transform 0.6s var(--ease-out),
+			box-shadow 0.6s var(--ease-out);
+	}
+
+	.review:hover {
+		transform: translateY(-0.25rem);
+		box-shadow: 0 1.75rem 3rem -1.75rem rgb(20 17 14 / 0.35);
+	}
+
+	.review--lead {
+		grid-column: span 7;
+		gap: clamp(2.5rem, 5vw, 4rem);
+		padding: clamp(2rem, 3vw, 3rem);
+	}
+
+	.review__quote {
+		max-width: 30ch;
+		font-size: 1.0625rem;
+		font-weight: 500;
+		line-height: 1.45;
+		letter-spacing: -0.015em;
+		text-wrap: pretty;
+	}
+
+	.review--lead .review__quote {
+		max-width: 22ch;
+		font-size: clamp(1.5rem, 2.6vw, 2.25rem);
+		font-weight: 600;
+		line-height: 1.12;
+		letter-spacing: -0.04em;
+	}
+
+	.review__by {
+		display: flex;
+		align-items: center;
+		gap: 0.75rem;
+	}
+
+	.review__avatar {
+		width: 2.5rem;
+		height: 2.5rem;
+		border-radius: 50%;
+		object-fit: cover;
+		background: var(--sand);
+	}
+
+	.review--lead .review__avatar {
+		width: 3rem;
+		height: 3rem;
+	}
+
+	.review__name {
+		display: block;
+		font-size: 0.9375rem;
+		font-weight: 600;
+		letter-spacing: -0.02em;
+	}
+
+	.review__role {
+		display: block;
+		font-size: 0.8125rem;
+		color: var(--ink-soft);
+	}
+
+	/* ---- Aggregate score ---- */
+
+	.reviews__score {
+		display: flex;
+		flex-direction: column;
+		justify-content: space-between;
+		gap: 2rem;
+		grid-column: span 5;
+		padding: clamp(2rem, 3vw, 3rem);
+		border-radius: var(--r-xl);
+		background: var(--ink);
+		color: var(--bone);
+	}
+
+	.reviews__scoreValue {
+		font-size: clamp(4rem, 8vw, 7rem);
+		font-weight: 600;
+		letter-spacing: -0.07em;
+		line-height: 0.82;
+	}
+
+	.reviews__scoreLabel {
+		max-width: 18ch;
+		margin-top: 1rem;
+		font-size: 0.9375rem;
+		color: rgb(255 255 255 / 0.55);
+	}
+
+	.reviews__scoreFoot {
+		display: flex;
+		align-items: center;
+		gap: 0.875rem;
+	}
+
+	.reviews__stack {
+		display: flex;
+	}
+
+	.reviews__stack li:not(:first-child) {
+		margin-left: -0.625rem;
+	}
+
+	.reviews__stack img {
+		width: 2rem;
+		height: 2rem;
+		border: 2px solid var(--ink);
+		border-radius: 50%;
+		object-fit: cover;
+	}
+
+	.reviews__scoreCount {
+		font-size: 0.8125rem;
+		color: rgb(255 255 255 / 0.55);
+	}
+
+	@media (max-width: 64rem) {
+		.review--lead,
+		.reviews__score {
+			grid-column: span 12;
+		}
+
+		.review {
+			grid-column: span 6;
+		}
+	}
+
+	@media (max-width: 44rem) {
+		.review {
+			grid-column: span 12;
+		}
+	}
+</style>

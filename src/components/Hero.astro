@@ -1,0 +1,124 @@
+---
+import HeroUI from './HeroUI.astro';
+---
+
+<section class="heroBlock" id="top">
+	<div class="hero" data-hero-plate>
+		<canvas class="hero__canvas" data-hero-canvas></canvas>
+
+		<div class="hero__overlay" aria-hidden="true"></div>
+		<div class="hero__base" aria-hidden="true"></div>
+	</div>
+
+	<HeroUI />
+</section>
+
+<script>
+	import '../scripts/hero-frames';
+</script>
+
+<style>
+	.heroBlock {
+		position: relative;
+	}
+
+	.hero {
+		/* Monochrome fractal noise, tiled as a film grain texture. */
+		--grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23g)'/%3E%3C/svg%3E");
+		--grain-opacity: 0.18;
+
+		position: relative;
+		height: calc(100svh - var(--nav-height) - var(--inset));
+		margin-top: var(--nav-height);
+		margin-inline: var(--inset);
+		margin-bottom: var(--inset);
+		border-radius: var(--radius);
+		overflow: hidden;
+		background: var(--brand);
+	}
+
+	.hero__canvas {
+		display: block;
+		width: 100%;
+		height: 100%;
+		/* Softens the JPEG blocking that shows up once the frames are upscaled. */
+		filter: blur(0.3px) saturate(1.06) contrast(1.03);
+		visibility: hidden;
+		opacity: 0;
+	}
+
+	.hero__overlay {
+		position: absolute;
+		inset: 0;
+		pointer-events: none;
+		background: radial-gradient(125% 105% at 50% 45%, transparent 40%, rgb(60 20 0 / 0.4) 100%);
+	}
+
+	.hero__overlay::after {
+		content: '';
+		position: absolute;
+		/* Oversized so the drifting texture never uncovers the edges of the hero. */
+		inset: -4rem;
+		background-image: var(--grain);
+		opacity: var(--grain-opacity);
+		mix-blend-mode: overlay;
+		animation: hero-grain 0.9s steps(1) infinite;
+	}
+
+	@keyframes hero-grain {
+		0% {
+			transform: translate3d(0, 0, 0);
+		}
+		12.5% {
+			transform: translate3d(-1.5rem, 1rem, 0);
+		}
+		25% {
+			transform: translate3d(2rem, -1.5rem, 0);
+		}
+		37.5% {
+			transform: translate3d(-2rem, -1rem, 0);
+		}
+		50% {
+			transform: translate3d(1rem, 2rem, 0);
+		}
+		62.5% {
+			transform: translate3d(-1rem, -2rem, 0);
+		}
+		75% {
+			transform: translate3d(2rem, 1.5rem, 0);
+		}
+		87.5% {
+			transform: translate3d(-2rem, 1.5rem, 0);
+		}
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.hero__overlay::after {
+			animation: none;
+		}
+	}
+
+	/* Grounds the bottom edge so the status strip has something to sit on, and
+	   settles the lower-right corner where the source frames carry a watermark. */
+	.hero__base {
+		position: absolute;
+		inset: auto 0 0;
+		height: 34%;
+		pointer-events: none;
+		background:
+			radial-gradient(52% 120% at 94% 106%, rgb(40 15 0 / 0.66), rgb(40 15 0 / 0) 66%),
+			linear-gradient(
+				to top,
+				rgb(48 20 0 / 0.6) 0%,
+				rgb(48 20 0 / 0.3) 14%,
+				rgb(48 20 0 / 0.12) 42%,
+				rgb(48 20 0 / 0) 100%
+			);
+	}
+
+	@media (max-width: 54rem) {
+		.hero__base {
+			height: 20%;
+		}
+	}
+</style>

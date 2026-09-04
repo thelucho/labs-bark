@@ -1,0 +1,449 @@
+---
+const profiles = [
+	{
+		id: 'chill',
+		name: 'The Chill One',
+		summary: 'Has never once been in a hurry, and has no intention of starting now.',
+		energy: 24,
+		rows: [
+			{ label: 'Favourite activity', value: 'Being horizontal, professionally.' },
+			{ label: 'Walk style', value: 'Reluctantly, with negotiated breaks.' },
+			{ label: 'Known for', value: 'Sighing at reasonable requests.' },
+		],
+		stat: { value: '7', unit: 'naps / day', note: 'Peak performance: 11am' },
+	},
+	{
+		id: 'chaos',
+		name: 'The Chaos Engine',
+		summary: 'Operates at exactly one speed, in every direction, simultaneously.',
+		energy: 100,
+		rows: [
+			{ label: 'Favourite activity', value: 'All of them. At once.' },
+			{ label: 'Walk style', value: 'Sprint, stop, reconsider, sprint.' },
+			{ label: 'Known for', value: 'Redecorating without approval.' },
+		],
+		stat: { value: '41', unit: 'objects relocated', note: 'This week alone' },
+	},
+	{
+		id: 'overthinker',
+		name: 'The Overthinker',
+		summary: 'Would very much like to enter the room, but needs a moment first.',
+		energy: 58,
+		rows: [
+			{ label: 'Favourite activity', value: 'Observing, from a doorway.' },
+			{ label: 'Walk style', value: 'Cautiously, checking for updates.' },
+			{ label: 'Known for', value: 'Committing, then immediately not.' },
+		],
+		stat: { value: '12', unit: 'decisions reversed', note: 'Before breakfast' },
+	},
+	{
+		id: 'main',
+		name: 'The Main Character',
+		summary: 'Everything is a scene, and this happens to be their scene.',
+		energy: 97,
+		rows: [
+			{ label: 'Favourite activity', value: 'Being perceived.' },
+			{ label: 'Walk style', value: 'Slowly, while everyone waits.' },
+			{ label: 'Known for', value: 'Entering rooms that were fine before.' },
+		],
+		stat: { value: '0', unit: 'photographs declined', note: 'Lifetime record' },
+	},
+];
+---
+
+<section class="vibe section" id="lifestyle" data-personality>
+	<div class="shell">
+		<header class="vibe__head">
+			<p class="eyebrow" data-reveal="up">04 — Temperament</p>
+			<h2 class="headline vibe__title" data-reveal="up">What's your dog's vibe?</h2>
+		</header>
+
+		<div class="vibe__layout" data-reveal="up">
+			<div class="vibe__tabs" role="tablist" aria-orientation="vertical" aria-label="Dog temperaments">
+				{
+					profiles.map((profile, index) => (
+						<button
+							class="vibe__tab"
+							type="button"
+							role="tab"
+							id={`vibe-tab-${profile.id}`}
+							aria-controls={`vibe-panel-${profile.id}`}
+							aria-selected={index === 0 ? 'true' : 'false'}
+							tabindex={index === 0 ? 0 : -1}
+						>
+							<span class="vibe__tabNum">{String(index + 1).padStart(2, '0')}</span>
+							<span class="vibe__tabName">{profile.name}</span>
+						</button>
+					))
+				}
+			</div>
+
+			<div class="vibe__stage">
+				{
+					profiles.map((profile, index) => (
+						<div
+							class="vibe__panel"
+							role="tabpanel"
+							id={`vibe-panel-${profile.id}`}
+							aria-labelledby={`vibe-tab-${profile.id}`}
+							hidden={index !== 0}
+						>
+							<div class="vibe__panelMain">
+								<p class="vibe__kicker" data-vibe-item>
+									Profile {String(index + 1).padStart(2, '0')}
+								</p>
+								<h3 class="vibe__name" data-vibe-item>
+									{profile.name}
+								</h3>
+								<p class="vibe__summary" data-vibe-item>
+									{profile.summary}
+								</p>
+
+								<div class="vibe__energy" data-vibe-item>
+									<div class="vibe__energyRow">
+										<span class="vibe__energyLabel">Energy</span>
+										<span class="vibe__energyValue" data-vibe-count={profile.energy}>
+											{profile.energy}%
+										</span>
+									</div>
+									<div
+										class="vibe__energyTrack"
+										role="meter"
+										aria-label={`${profile.name} energy level`}
+										aria-valuenow={profile.energy}
+										aria-valuemin="0"
+										aria-valuemax="100"
+									>
+										<span
+											class="vibe__energyFill"
+											data-vibe-fill
+											style={`--fill: ${profile.energy / 100}`}
+										/>
+									</div>
+								</div>
+
+								<dl class="vibe__rows">
+									{profile.rows.map((row) => (
+										<div class="vibe__row" data-vibe-item>
+											<dt>{row.label}</dt>
+											<dd>{row.value}</dd>
+										</div>
+									))}
+								</dl>
+							</div>
+
+							<aside class="vibe__stat" data-vibe-item>
+								<p class="vibe__statValue">{profile.stat.value}</p>
+								<p class="vibe__statUnit">{profile.stat.unit}</p>
+								<p class="vibe__statNote">{profile.stat.note}</p>
+							</aside>
+						</div>
+					))
+				}
+			</div>
+		</div>
+	</div>
+</section>
+
+<script>
+	import '../scripts/personality';
+</script>
+
+<style>
+	.vibe {
+		background: var(--ink);
+		color: var(--bone);
+	}
+
+	.vibe__head {
+		display: grid;
+		gap: 1.25rem;
+		margin-bottom: clamp(2.5rem, 5vw, 4rem);
+	}
+
+	.vibe :global(.eyebrow) {
+		color: rgb(255 255 255 / 0.55);
+	}
+
+	.vibe__title {
+		max-width: 16ch;
+	}
+
+	.vibe__layout {
+		display: grid;
+		grid-template-columns: minmax(0, 20rem) minmax(0, 1fr);
+		gap: clamp(1.5rem, 3vw, 3rem);
+		align-items: stretch;
+	}
+
+	/* ---- Tabs ---- */
+
+	/* Stretched to the panel and split four ways, so the rail always squares off
+	   against the bottom edge of the card. */
+	.vibe__tabs {
+		display: grid;
+		grid-auto-rows: 1fr;
+		gap: 1px;
+		background: rgb(255 255 255 / 0.1);
+		border-block: 1px solid rgb(255 255 255 / 0.1);
+	}
+
+	.vibe__tab {
+		display: flex;
+		align-items: center;
+		gap: 1rem;
+		width: 100%;
+		min-height: 3.5rem;
+		padding: 1rem 0.75rem 1rem 0;
+		border: 0;
+		background: var(--ink);
+		text-align: left;
+		cursor: pointer;
+		transition:
+			padding-left 0.5s var(--ease-out),
+			color 0.35s var(--ease-soft);
+		color: rgb(255 255 255 / 0.55);
+	}
+
+	.vibe__tab:hover {
+		color: rgb(255 255 255 / 0.85);
+		padding-left: 0.5rem;
+	}
+
+	.vibe__tab[aria-selected='true'] {
+		color: var(--bone);
+		padding-left: 0.75rem;
+	}
+
+	.vibe__tabNum {
+		font-size: 0.6875rem;
+		font-weight: 700;
+		letter-spacing: 0.16em;
+		font-variant-numeric: tabular-nums;
+		color: rgb(255 255 255 / 0.5);
+	}
+
+	.vibe__tab[aria-selected='true'] .vibe__tabNum {
+		color: var(--brand);
+	}
+
+	.vibe__tabName {
+		font-size: clamp(1.0625rem, 1.4vw, 1.375rem);
+		font-weight: 600;
+		letter-spacing: -0.03em;
+	}
+
+	/* ---- Panel ---- */
+
+	.vibe__stage {
+		position: relative;
+		border: 1px solid rgb(255 255 255 / 0.12);
+		border-radius: var(--r-xl);
+		background: rgb(255 255 255 / 0.03);
+		overflow: hidden;
+	}
+
+	.vibe__panel {
+		display: grid;
+		grid-template-columns: minmax(0, 1fr) minmax(0, 13rem);
+		gap: clamp(1.5rem, 3vw, 2.5rem);
+		padding: clamp(1.75rem, 3vw, 2.75rem);
+	}
+
+	.vibe__panel[hidden] {
+		display: none;
+	}
+
+	.vibe__kicker {
+		font-size: 0.6875rem;
+		font-weight: 700;
+		letter-spacing: 0.16em;
+		text-transform: uppercase;
+		color: var(--brand);
+	}
+
+	.vibe__name {
+		margin-top: 0.75rem;
+		font-size: clamp(1.875rem, 3.4vw, 3rem);
+		font-weight: 600;
+		letter-spacing: -0.045em;
+		line-height: 1;
+	}
+
+	.vibe__summary {
+		max-width: 34ch;
+		margin-top: 0.875rem;
+		font-size: var(--t-lede);
+		line-height: 1.45;
+		color: rgb(255 255 255 / 0.6);
+		text-wrap: pretty;
+	}
+
+	.vibe__energy {
+		margin-top: clamp(1.75rem, 3vw, 2.5rem);
+		max-width: 22rem;
+	}
+
+	.vibe__energyRow {
+		display: flex;
+		align-items: baseline;
+		justify-content: space-between;
+		gap: 1rem;
+		margin-bottom: 0.5rem;
+	}
+
+	.vibe__energyLabel {
+		font-size: 0.6875rem;
+		font-weight: 700;
+		letter-spacing: 0.16em;
+		text-transform: uppercase;
+		color: rgb(255 255 255 / 0.45);
+	}
+
+	.vibe__energyValue {
+		font-size: 1.125rem;
+		font-weight: 600;
+		letter-spacing: -0.03em;
+		font-variant-numeric: tabular-nums;
+	}
+
+	.vibe__energyTrack {
+		height: 0.375rem;
+		border-radius: var(--r-pill);
+		background: rgb(255 255 255 / 0.1);
+		overflow: hidden;
+	}
+
+	.vibe__energyFill {
+		display: block;
+		width: 100%;
+		height: 100%;
+		border-radius: inherit;
+		background: linear-gradient(90deg, var(--brand), #ffd08a);
+		transform: scaleX(var(--fill));
+		transform-origin: left center;
+	}
+
+	.vibe__rows {
+		display: grid;
+		margin: clamp(1.75rem, 3vw, 2.5rem) 0 0;
+		border-top: 1px solid rgb(255 255 255 / 0.1);
+	}
+
+	/* Ruled with borders rather than a tinted grid gap, so the rows keep the glass
+	   tint of the panel behind them instead of punching back to the section ink. */
+	.vibe__row {
+		display: grid;
+		grid-template-columns: minmax(0, 11rem) minmax(0, 1fr);
+		gap: 1rem;
+		padding: 0.875rem 0;
+	}
+
+	.vibe__row + .vibe__row {
+		border-top: 1px solid rgb(255 255 255 / 0.1);
+	}
+
+	.vibe__row dt {
+		font-size: 0.6875rem;
+		font-weight: 700;
+		letter-spacing: 0.14em;
+		line-height: 1.6;
+		text-transform: uppercase;
+		color: rgb(255 255 255 / 0.55);
+	}
+
+	.vibe__row dd {
+		margin: 0;
+		font-size: 0.9375rem;
+		color: rgb(255 255 255 / 0.9);
+	}
+
+	.vibe__stat {
+		display: grid;
+		align-content: start;
+		align-self: start;
+		gap: 0.2rem;
+		padding: 1.25rem;
+		border: 1px solid rgb(255 255 255 / 0.12);
+		border-radius: var(--r-lg);
+		background: rgb(255 255 255 / 0.04);
+	}
+
+	.vibe__statValue {
+		font-size: clamp(2.75rem, 4.5vw, 3.75rem);
+		font-weight: 600;
+		letter-spacing: -0.06em;
+		line-height: 0.9;
+		color: var(--brand);
+	}
+
+	.vibe__statUnit {
+		margin-top: 0.4rem;
+		font-size: 0.6875rem;
+		font-weight: 700;
+		letter-spacing: 0.14em;
+		text-transform: uppercase;
+	}
+
+	.vibe__statNote {
+		font-size: 0.8125rem;
+		color: rgb(255 255 255 / 0.45);
+	}
+
+	@media (max-width: 62rem) {
+		.vibe__layout {
+			grid-template-columns: 1fr;
+		}
+
+		.vibe__panel {
+			grid-template-columns: 1fr;
+		}
+
+		.vibe__stat {
+			display: flex;
+			align-items: baseline;
+			flex-wrap: wrap;
+			gap: 0.25rem 0.75rem;
+		}
+	}
+
+	@media (max-width: 40rem) {
+		.vibe__tabs {
+			display: flex;
+			gap: 0.5rem;
+			overflow-x: auto;
+			padding-bottom: 0.5rem;
+			background: none;
+			border: 0;
+			scrollbar-width: none;
+		}
+
+		.vibe__tab {
+			flex: 0 0 auto;
+			width: auto;
+			min-height: 2.75rem;
+			padding: 0.75rem 1rem;
+			border: 1px solid rgb(255 255 255 / 0.14);
+			border-radius: var(--r-pill);
+			white-space: nowrap;
+		}
+
+		.vibe__tab:hover,
+		.vibe__tab[aria-selected='true'] {
+			padding-left: 1rem;
+		}
+
+		.vibe__tab[aria-selected='true'] {
+			background: rgb(255 255 255 / 0.1);
+		}
+
+		.vibe__tabName {
+			font-size: 0.9375rem;
+		}
+
+		.vibe__row {
+			grid-template-columns: 1fr;
+			gap: 0.15rem;
+		}
+	}
+</style>

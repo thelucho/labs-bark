@@ -1,0 +1,336 @@
+---
+const meters = [
+	{ label: 'Energy', value: 82, display: '82%' },
+	{ label: 'Sociability', value: 64, display: '64%' },
+	{ label: 'Willingness to fetch', value: 31, display: '31%' },
+];
+
+const facts = [
+	{ label: 'Walk status', value: 'Ready', note: 'Has been ready since 6:04' },
+	{ label: 'Nap progress', value: '04h 32m', note: 'Ahead of schedule' },
+	{ label: 'Favourite sound', value: 'Rain / Lo-fi', note: 'Skipped: doorbell' },
+	{ label: 'Treats today', value: '3 / 2', note: 'Accounting disputed' },
+];
+---
+
+<section class="dash section" id="wellness">
+	<div class="shell">
+		<header class="dash__head">
+			<p class="eyebrow" data-reveal="up">02 — Daily report</p>
+			<h2 class="headline dash__title" data-reveal="up">Your dog's daily report.</h2>
+			<p class="lede dash__lede" data-reveal="up">
+				Everything BARK™ noticed today, summarised for a species that will never read it.
+			</p>
+		</header>
+
+		<div class="dash__layout">
+			<figure class="dash__figure" data-reveal="scale">
+				<img
+					src="/images/dashboard-dog.jpg"
+					alt="A beagle resting in a sunlit minimal interior"
+					loading="lazy"
+					decoding="async"
+					width="1024"
+					height="1365"
+					data-parallax="7"
+				/>
+
+				<figcaption class="dash__caption glass">
+					<span class="dot"></span>
+					Sensor active — collar, bed, bowl
+				</figcaption>
+			</figure>
+
+			<div class="dash__panel" data-reveal="up">
+				<header class="dash__panelHead">
+					<span class="dash__os">BARK OS</span>
+					<span class="dash__live"><span class="dot"></span>Live</span>
+				</header>
+
+				<div class="dash__mood">
+					<p class="dash__moodLabel">Today's mood</p>
+					<p class="dash__moodValue">
+						82<span class="dash__moodUnit">%</span>
+						<span class="dash__moodWord">relaxed</span>
+					</p>
+					<p class="dash__moodNote">Up 6% since the mail carrier left the street.</p>
+				</div>
+
+				<ul class="dash__meters">
+					{
+						meters.map((meter) => (
+							<li class="meter">
+								<div class="meter__row">
+									<span class="meter__label">{meter.label}</span>
+									<span class="meter__value">{meter.display}</span>
+								</div>
+								<div
+									class="meter__track"
+									role="meter"
+									aria-label={meter.label}
+									aria-valuenow={meter.value}
+									aria-valuemin="0"
+									aria-valuemax="100"
+								>
+									<span style={`--fill: ${meter.value}%`} />
+								</div>
+							</li>
+						))
+					}
+				</ul>
+
+				<dl class="dash__facts">
+					{
+						facts.map((fact) => (
+							<div class="fact">
+								<dt>{fact.label}</dt>
+								<dd>
+									{fact.value}
+									<small>{fact.note}</small>
+								</dd>
+							</div>
+						))
+					}
+				</dl>
+			</div>
+		</div>
+	</div>
+</section>
+
+<style>
+	.dash {
+		position: relative;
+		background: linear-gradient(180deg, var(--bone) 0%, var(--sand) 45%, var(--bone) 100%);
+	}
+
+	.dash__head {
+		display: grid;
+		gap: 1.25rem;
+		max-width: 42rem;
+		margin-bottom: clamp(2.5rem, 5vw, 4rem);
+	}
+
+	.dash__title {
+		max-width: 14ch;
+	}
+
+	.dash__lede {
+		max-width: 34rem;
+	}
+
+	.dash__layout {
+		display: grid;
+		grid-template-columns: minmax(0, 0.85fr) minmax(0, 1fr);
+		align-items: stretch;
+		gap: clamp(0.75rem, 1.5vw, 1.25rem);
+	}
+
+	.dash__figure {
+		position: relative;
+		border-radius: var(--r-xl);
+		overflow: hidden;
+		background: var(--sand);
+	}
+
+	.dash__figure img {
+		width: 100%;
+		height: 100%;
+		min-height: 26rem;
+		object-fit: cover;
+		/* Extra height gives the parallax drift somewhere to travel. */
+		scale: 1.08;
+	}
+
+	.dash__caption {
+		position: absolute;
+		inset: auto 1rem 1rem;
+		display: flex;
+		align-items: center;
+		gap: 0.5rem;
+		padding: 0.6rem 0.9rem;
+		border-radius: var(--r-pill);
+		font-size: 0.6875rem;
+		font-weight: 600;
+		letter-spacing: 0.08em;
+		text-transform: uppercase;
+	}
+
+	.dash__panel {
+		display: grid;
+		align-content: start;
+		gap: clamp(1.5rem, 2.5vw, 2.25rem);
+		padding: clamp(1.5rem, 2.5vw, 2.25rem);
+		border: 1px solid var(--line);
+		border-radius: var(--r-xl);
+		background: var(--paper);
+		box-shadow: 0 2rem 4rem -2.5rem rgb(20 17 14 / 0.35);
+	}
+
+	.dash__panelHead {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 1rem;
+		padding-bottom: 1.125rem;
+		border-bottom: 1px solid var(--line);
+		font-size: 0.6875rem;
+		font-weight: 700;
+		letter-spacing: 0.16em;
+		line-height: 1;
+		text-transform: uppercase;
+	}
+
+	.dash__os {
+		color: var(--ink);
+	}
+
+	.dash__live {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.45rem;
+		color: var(--ink-soft);
+	}
+
+	.dash__moodLabel {
+		font-size: 0.6875rem;
+		font-weight: 700;
+		letter-spacing: 0.16em;
+		text-transform: uppercase;
+		color: var(--ink-faint);
+	}
+
+	.dash__moodValue {
+		display: flex;
+		align-items: baseline;
+		flex-wrap: wrap;
+		gap: 0 0.5rem;
+		margin-top: 0.5rem;
+		font-size: clamp(3.25rem, 6vw, 5rem);
+		font-weight: 600;
+		letter-spacing: -0.06em;
+		line-height: 0.9;
+	}
+
+	.dash__moodUnit {
+		font-size: 0.42em;
+		color: var(--ink-faint);
+	}
+
+	.dash__moodWord {
+		font-family: var(--font-display);
+		font-size: 0.5em;
+		font-style: italic;
+		font-weight: 400;
+		letter-spacing: -0.02em;
+		color: var(--brand-deep);
+	}
+
+	.dash__moodNote {
+		margin-top: 0.75rem;
+		font-size: 0.875rem;
+		color: var(--ink-soft);
+	}
+
+	.dash__meters {
+		display: grid;
+		gap: 0.875rem;
+	}
+
+	.meter__row {
+		display: flex;
+		align-items: baseline;
+		justify-content: space-between;
+		gap: 1rem;
+		margin-bottom: 0.4rem;
+	}
+
+	.meter__label {
+		font-size: 0.8125rem;
+		color: var(--ink-soft);
+	}
+
+	.meter__value {
+		font-size: 0.8125rem;
+		font-weight: 600;
+		font-variant-numeric: tabular-nums;
+	}
+
+	.meter__track {
+		height: 0.375rem;
+		border-radius: var(--r-pill);
+		background: rgb(20 17 14 / 0.08);
+		overflow: hidden;
+	}
+
+	.meter__track span {
+		display: block;
+		width: var(--fill);
+		height: 100%;
+		border-radius: inherit;
+		background: linear-gradient(90deg, var(--brand), var(--brand-deep));
+	}
+
+	.dash__facts {
+		display: grid;
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+		gap: 1px;
+		margin: 0;
+		border-top: 1px solid var(--line);
+		background: var(--line);
+	}
+
+	.fact {
+		padding: 1.125rem 0 0.25rem;
+		background: var(--paper);
+	}
+
+	.fact:nth-child(even) {
+		padding-left: 1.125rem;
+	}
+
+	.fact dt {
+		font-size: 0.6875rem;
+		font-weight: 700;
+		letter-spacing: 0.14em;
+		text-transform: uppercase;
+		color: var(--ink-faint);
+	}
+
+	.fact dd {
+		margin: 0.4rem 0 0;
+		font-size: 1.125rem;
+		font-weight: 600;
+		letter-spacing: -0.03em;
+		line-height: 1.2;
+	}
+
+	.fact small {
+		display: block;
+		margin-top: 0.25rem;
+		font-size: 0.75rem;
+		font-weight: 400;
+		letter-spacing: 0;
+		color: var(--ink-soft);
+	}
+
+	@media (max-width: 62rem) {
+		.dash__layout {
+			grid-template-columns: 1fr;
+		}
+
+		.dash__figure img {
+			min-height: 20rem;
+			max-height: 26rem;
+		}
+	}
+
+	@media (max-width: 34rem) {
+		.dash__facts {
+			grid-template-columns: 1fr;
+		}
+
+		.fact:nth-child(even) {
+			padding-left: 0;
+		}
+	}
+</style>

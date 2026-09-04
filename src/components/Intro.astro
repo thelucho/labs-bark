@@ -1,0 +1,164 @@
+<div
+	class="intro"
+	data-intro
+	role="progressbar"
+	aria-label="Loading BARK"
+	aria-valuemin="0"
+	aria-valuemax="100"
+	aria-valuenow="0"
+>
+	<div class="intro__panel" data-intro-panel>
+		<div class="intro__meta" data-intro-meta>
+			<div class="intro__row">
+				<p class="intro__brand">BARK<span class="intro__tm">™</span></p>
+
+				<p class="intro__value">
+					<span class="intro__digits" data-intro-count>0</span>
+					<span class="intro__unit">%</span>
+				</p>
+			</div>
+
+			<div class="intro__track">
+				<span class="intro__fill" data-intro-fill></span>
+			</div>
+
+			<p class="intro__caption">Loading the frame sequence</p>
+		</div>
+	</div>
+</div>
+
+<script>
+	import '../scripts/intro';
+</script>
+
+<style>
+	.intro {
+		position: fixed;
+		inset: 0;
+		z-index: 200;
+		/* Without JS there is nothing to dismiss the overlay, so it never mounts. */
+		display: none;
+	}
+
+	:global(html.has-js) .intro {
+		display: block;
+	}
+
+	.intro__panel {
+		position: absolute;
+		inset: 0;
+		overflow: hidden;
+		/* Sampled off the frame sequence: a pure amber sweep lit from above the subject. */
+		background: radial-gradient(
+			125% 100% at 50% 20%,
+			#ffa800 0%,
+			#fe9e00 42%,
+			#fa9100 72%,
+			#f58600 100%
+		);
+		/* The outro clips this down onto the hero plate; the start shape is set from
+		   JS so the tween always has matching inset values to interpolate. */
+		will-change: clip-path, opacity;
+	}
+
+	/* Same vignette and grain recipe as the hero, so the handover is seamless. */
+	.intro__panel::before {
+		content: '';
+		position: absolute;
+		inset: 0;
+		background: radial-gradient(125% 105% at 50% 45%, transparent 40%, rgb(60 20 0 / 0.4) 100%);
+	}
+
+	.intro__panel::after {
+		content: '';
+		position: absolute;
+		inset: 0;
+		background-image: var(--grain);
+		opacity: 0.18;
+		mix-blend-mode: overlay;
+	}
+
+	.intro__meta {
+		position: absolute;
+		inset: auto var(--gutter) clamp(1.75rem, 4vh, 3.25rem);
+		display: grid;
+		gap: clamp(0.75rem, 1.4vh, 1.125rem);
+		/* Ink on amber, same treatment the hero overlay uses to stay legible. */
+		color: rgb(20 17 14 / 0.88);
+	}
+
+	.intro__row {
+		display: flex;
+		align-items: flex-end;
+		justify-content: space-between;
+		gap: 1.5rem;
+	}
+
+	.intro__brand {
+		font-size: clamp(1.25rem, 1rem + 0.6vw, 1.625rem);
+		font-weight: 700;
+		letter-spacing: -0.045em;
+		line-height: 1;
+	}
+
+	.intro__tm {
+		font-size: 0.5em;
+		font-weight: 600;
+		vertical-align: super;
+		letter-spacing: 0;
+	}
+
+	.intro__value {
+		display: flex;
+		align-items: baseline;
+		gap: 0.06em;
+		font-size: clamp(2.75rem, 1.25rem + 5.2vw, 5.5rem);
+		font-weight: 600;
+		letter-spacing: -0.05em;
+		line-height: 0.82;
+	}
+
+	.intro__digits {
+		/* Fixed three-digit slot so the counter never nudges the layout as it climbs. */
+		min-width: 3ch;
+		text-align: right;
+		font-variant-numeric: tabular-nums;
+	}
+
+	.intro__unit {
+		font-size: 0.3em;
+		font-weight: 700;
+		letter-spacing: 0.02em;
+	}
+
+	.intro__track {
+		position: relative;
+		height: 2px;
+		overflow: hidden;
+		background: rgb(20 17 14 / 0.16);
+	}
+
+	.intro__fill {
+		position: absolute;
+		inset: 0;
+		background: rgb(20 17 14 / 0.82);
+		transform: scaleX(0);
+		transform-origin: left center;
+	}
+
+	.intro__caption {
+		font-size: 0.6875rem;
+		font-weight: 600;
+		letter-spacing: 0.2em;
+		line-height: 1;
+		text-transform: uppercase;
+		/* Held at 0.82 so the small caps still clear 4.5:1 over the amber plate. */
+		color: rgb(20 17 14 / 0.82);
+	}
+
+	@media (max-width: 30rem) {
+		.intro__caption {
+			letter-spacing: 0.14em;
+		}
+	}
+</style>

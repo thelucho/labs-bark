@@ -1,0 +1,89 @@
+---
+---
+
+<section class="cta">
+	<div class="shell">
+		<div class="cta__panel grain">
+			<p class="eyebrow cta__eyebrow" data-reveal="up">Explore the collection</p>
+
+			<h2 class="display cta__title" data-reveal="up">
+				Good dogs deserve<br /><span class="serif">good design.</span>
+			</h2>
+
+			<p class="cta__copy" data-reveal="up">Modern essentials for pets who refuse to settle.</p>
+
+			<div class="cta__actions" data-reveal="up">
+				<a class="btn cta__btn" href="#collection" data-magnetic="0.25">
+					Explore BARK™
+					<svg class="btn__arrow" viewBox="0 0 12 12" fill="none" aria-hidden="true">
+						<path
+							d="M2 10 10 2M4 2h6v6"
+							stroke="currentColor"
+							stroke-width="1.6"
+							stroke-linecap="round"
+							stroke-linejoin="round"></path>
+					</svg>
+				</a>
+
+				<span class="cta__note">Free returns. Unlimited sniffing.</span>
+			</div>
+		</div>
+	</div>
+</section>
+
+<style>
+	.cta {
+		padding-block: clamp(3rem, 7vw, 6rem);
+	}
+
+	.cta__panel {
+		position: relative;
+		display: grid;
+		justify-items: center;
+		gap: 1.5rem;
+		padding: clamp(4rem, 11vw, 9rem) clamp(1.5rem, 5vw, 5rem);
+		border-radius: clamp(1.5rem, 3vw, 2.5rem);
+		overflow: hidden;
+		text-align: center;
+		background:
+			radial-gradient(120% 90% at 50% 0%, #ffc46b 0%, rgb(255 196 107 / 0) 60%),
+			linear-gradient(170deg, var(--brand) 0%, #e07d05 100%);
+	}
+
+	.cta__eyebrow {
+		color: rgb(20 17 14 / 0.78);
+	}
+
+	.cta__title {
+		max-width: 16ch;
+	}
+
+	.cta__title .serif {
+		font-size: 1.05em;
+	}
+
+	.cta__copy {
+		max-width: 30ch;
+		font-size: var(--t-lede);
+		color: rgb(20 17 14 / 0.72);
+		text-wrap: pretty;
+	}
+
+	.cta__actions {
+		display: grid;
+		justify-items: center;
+		gap: 1rem;
+		margin-top: 1rem;
+	}
+
+	.cta__btn {
+		padding-inline: 2rem;
+		min-height: 3.25rem;
+	}
+
+	.cta__note {
+		font-size: 0.8125rem;
+		font-weight: 500;
+		color: rgb(20 17 14 / 0.78);
+	}
+</style>

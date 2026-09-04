@@ -1,0 +1,150 @@
+---
+const principles = [
+	{ label: 'Thoughtfully designed', note: 'Six months on a buckle nobody will ever compliment.' },
+	{ label: 'Human tested', note: 'Assembled on a kitchen floor, at least once, badly.' },
+	{ label: 'Dog approved', note: 'Approval measured in tail frequency, not focus groups.' },
+];
+---
+
+<section class="philosophy section" id="about">
+	<div class="shell">
+		<p class="eyebrow" data-reveal="up">01 — Philosophy</p>
+
+		<h2 class="philosophy__statement">
+			<span class="philosophy__line" data-reveal="up">Pets don't need more stuff.</span>
+			<span class="philosophy__line philosophy__line--shift" data-reveal="up">
+				They need <span class="serif">better</span> stuff.
+			</span>
+		</h2>
+
+		<p class="philosophy__copy lede" data-reveal="up">
+			We design modern essentials for animals with very little patience and surprisingly high
+			standards.
+		</p>
+
+		<hr class="rule philosophy__rule" data-reveal="fade" />
+
+		<ol class="philosophy__list">
+			{
+				principles.map((principle, index) => (
+					<li class="philosophy__item" data-reveal="up">
+						<span class="philosophy__num">{String(index + 1).padStart(2, '0')}</span>
+						<h3 class="philosophy__label">{principle.label}</h3>
+						<p class="philosophy__note">{principle.note}</p>
+					</li>
+				))
+			}
+		</ol>
+	</div>
+</section>
+
+<style>
+	.philosophy {
+		padding-top: clamp(4.5rem, 10vh, 8.5rem);
+	}
+
+	.philosophy__statement {
+		display: grid;
+		margin-top: clamp(2rem, 4vw, 3.5rem);
+		font-size: var(--t-display);
+		font-weight: 600;
+		line-height: 0.98;
+		letter-spacing: -0.045em;
+	}
+
+	.philosophy__line {
+		display: block;
+	}
+
+	/* Controlled asymmetry: the second line steps into the measure of the first. */
+	.philosophy__line--shift {
+		margin-left: clamp(0rem, 8vw, 9rem);
+		color: var(--ink-soft);
+	}
+
+	.philosophy__line .serif {
+		font-size: 1.05em;
+		color: var(--ink);
+	}
+
+	.philosophy__copy {
+		max-width: 34rem;
+		margin-top: clamp(2rem, 4vw, 3.25rem);
+		margin-left: auto;
+	}
+
+	.philosophy__rule {
+		margin-top: clamp(3.5rem, 7vw, 6rem);
+	}
+
+	.philosophy__list {
+		display: grid;
+		grid-template-columns: repeat(3, minmax(0, 1fr));
+		gap: clamp(1.5rem, 3vw, 3rem);
+		margin-top: 2rem;
+	}
+
+	.philosophy__item {
+		display: grid;
+		gap: 0.5rem;
+		align-content: start;
+	}
+
+	.philosophy__num {
+		font-size: 0.6875rem;
+		font-weight: 700;
+		letter-spacing: 0.16em;
+		color: var(--brand-deep);
+		font-variant-numeric: tabular-nums;
+	}
+
+	.philosophy__label {
+		font-size: var(--t-h3);
+		font-weight: 600;
+		letter-spacing: -0.03em;
+		line-height: 1.1;
+	}
+
+	.philosophy__note {
+		max-width: 26ch;
+		font-size: 0.9375rem;
+		color: var(--ink-soft);
+		text-wrap: pretty;
+	}
+
+	@media (max-width: 54rem) {
+		.philosophy__line--shift {
+			margin-left: 0;
+		}
+
+		.philosophy__copy {
+			margin-left: 0;
+		}
+
+		.philosophy__list {
+			grid-template-columns: 1fr;
+			gap: 2rem;
+		}
+
+		.philosophy__item {
+			grid-template-columns: 2.5rem 1fr;
+			grid-template-areas:
+				'num label'
+				'.   note';
+			gap: 0.25rem 0.5rem;
+		}
+
+		.philosophy__num {
+			grid-area: num;
+			line-height: 1.6;
+		}
+
+		.philosophy__label {
+			grid-area: label;
+		}
+
+		.philosophy__note {
+			grid-area: note;
+		}
+	}
+</style>
